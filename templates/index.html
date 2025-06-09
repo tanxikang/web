@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title%}
+
+谭熙康的博客主页
+
+{% endblock %}
+{% block content %}
+<div class="container-xl">
+    {% for article in articles %}
+    {% if current_user.is_authenticated%}
+        {% include './includes/article_modals.html' %}
+    {% endif%}
+    <div class="card mt-4" style="background-color: #ecf2f9">
+        <div class="card-header">
+            <ul class="nav">
+                <li class="nav-item me-auto">
+                    <a class="btn fs-5 fw-bold" href="article/{{ article.id }}.html">{{ article.title }}</a>
+                </li>
+                {% if current_user.is_authenticated %}
+                <li class="nav-item px-1">
+                    <small class="text-body-secondary">
+                        <a class="btn" href="/editarticle/{{ article.id }}.html">编辑</a>
+                    </small>
+                </li>
+                <li class="nav-item px-1">
+                    <small class="text-body-secondary">
+                        <button class="btn" data-bs-toggle="modal" data-bs-target="#Modal-DeleteConfirm-{{article.id}}">删除</button>
+                    </small>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                <a class="btn fs-6" href="article/{{ article.id }}.html">{{ article.content }}</a>
+            </p>
+            <ul class="nav">
+                <li class="nav-item ms-auto">
+                    <small class="text-body-secondary">发布时间：{{ article.create_time }}</small>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

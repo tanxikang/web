@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title%}
+    登录页面
+{% endblock%}
+
+{% block content %}
+<div class="container-xl">
+
+    <form method="post" class="form-signin">
+
+        {{form.hidden_tag()}}
+
+        <h1 class="h3 mb-3 font-weight-normal">
+
+            博客管理员登录
+        </h1>
+        <br/>
+        {{ form.username.label() }}
+        {{ form.username(class='form-control', placeholder='请输入用户名') }}
+
+        {{ form.password.label() }}
+        {{ form.password(class='form-control', placeholder='请输入密码') }}
+        <br/>
+        {{ form.submit(class='btn btn-lg btn-block btn-primary') }}
+        
+        
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+# version: '3.8'
+services:
+  myblog_server:
+       build: .
+       image: myblog
+       container_name: myblog_server
+       ports:
+         - "80:520"
+       links:
+         - mysql_server
+       environment:
+          MYSQL_HOST: mysql_server
+          MYSQL_DB: blog
+          MYSQL_USER: root
+          MYSQL_PWD: 123456
+       volumes:
+         - .\myblog_data:/opt/myblog/data
+       depends_on:
+           mysql_server:
+             condition: service_healthy
+
+  mysql_server:
+       image: mysql:8.0
+       container_name: mysql_server
+       volumes:
+         - .\mysql:/var/lib/mysql
+       environment:
+         MYSQL_ROOT_PASSWORD: 123456
+         MYSQL_DATABASE: blog
+       healthcheck:
+        test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+        timeout: 20s
+        retries: 10
+
+
